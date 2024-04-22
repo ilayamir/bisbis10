@@ -40,8 +40,8 @@ public class DishController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DishProjection>> getDishesByRestaurant(@PathVariable("id") Long restaurantId) {
-        List<DishProjection> dishes = dishService.getDishesByRestaurant(restaurantId);
+    public ResponseEntity<List<Dish>> getDishesByRestaurant(@PathVariable("id") Long restaurantId) {
+        List<Dish> dishes = dishService.getDishesByRestaurant(restaurantId);
         return new ResponseEntity<>(dishes, HttpStatus.OK);
     }
 }

@@ -39,7 +39,7 @@ public class DishService {
         dishJpaRepo.deleteById(dishId);
     }
 
-    public List<DishProjection> getDishesByRestaurant(Long restaurantId) {
+    public List<Dish> getDishesByRestaurant(Long restaurantId) {
         Optional<Restaurant> restaurant = restaurantJpaRepo.findById(restaurantId);
         return restaurant.map(value -> dishJpaRepo.findByRestaurant(value)).orElse(null);
     }

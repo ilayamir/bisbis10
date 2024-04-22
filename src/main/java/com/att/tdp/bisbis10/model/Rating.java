@@ -1,6 +1,5 @@
 package com.att.tdp.bisbis10.model;
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "rating")
@@ -8,9 +7,14 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int restaurantId;
+    private Long restaurantId;
     private Double rating;
-    public Rating(int restaurantId, Double rating){
+
+    public Rating(){
+        super();
+    }
+    public Rating(Long restaurantId, Double rating){
+        super();
         this.restaurantId = restaurantId;
         this.rating = rating;
     }
@@ -19,9 +23,9 @@ public class Rating {
 
     public void setId(int id){this.id = id;}
 
-    public int getRestaurant_id(){return restaurantId;}
+    public Long getRestaurantId(){return restaurantId;}
 
-    public void setRestaurant_id(int restaurant_id){this.restaurantId = restaurant_id;}
+    public void setRestaurantId(Long restaurantId){this.restaurantId = restaurantId;}
 
     public Double getRating(){return rating;}
 

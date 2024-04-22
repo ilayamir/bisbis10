@@ -12,7 +12,7 @@ public class OrdersService {
     @Autowired
     private OrdersJpaRepository orderJpaRepo;
 
-    public UUID placeOrder(Orders order) {
-        return orderJpaRepo.save(order).getId();
+    public Orders placeOrder(Orders order) {
+        return orderJpaRepo.save(order);
     }
 }

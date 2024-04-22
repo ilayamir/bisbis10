@@ -9,7 +9,7 @@ public class Dish {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="restaurantId", referencedColumnName="id", insertable=false, updatable=false)
+    @JoinColumn(name="restaurant_id")
     @JsonBackReference
     private Restaurant restaurant;
     private String name;

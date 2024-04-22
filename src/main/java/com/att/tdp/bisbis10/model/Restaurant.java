@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.model;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ public class Restaurant {
     private boolean isKosher;
     @ElementCollection
     private List<String> cuisines;
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     private List<Dish> dishes;
     public Restaurant() {
@@ -38,7 +39,10 @@ public class Restaurant {
 
     public void setName(String name) {this.name = name;}
 
-    public double getAverageRating(){return averageRating;}
+    public double getAverageRating(){
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.parseDouble(df.format(averageRating));
+    }
 
     public void setAverageRating(double averageRating){this.averageRating = averageRating;}
 

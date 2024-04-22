@@ -24,8 +24,8 @@ public class OrdersController {
     }
 
     @PostMapping
-    public ResponseEntity<UUID> placeOrder(@RequestBody Orders order) {
-        UUID orderId = orderService.placeOrder(order);
-        return new ResponseEntity<>(orderId, HttpStatus.OK);
+    public ResponseEntity<Orders> placeOrder(@RequestBody Orders order) {
+        Orders orderResponse = orderService.placeOrder(order);
+        return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
 }

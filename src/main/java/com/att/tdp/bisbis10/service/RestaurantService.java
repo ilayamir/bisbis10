@@ -33,6 +33,13 @@ public class RestaurantService {
             restaurantJpaRepo.save(existingRestaurantOptional.get());
         }
     }
+    public void updateAverageRating(Long restaurantId, double newAverageRating) {
+        Optional<Restaurant> optionalRestaurant = restaurantJpaRepo.findById(restaurantId);
+        optionalRestaurant.ifPresent(restaurant -> {
+            restaurant.setAverageRating(newAverageRating);
+            restaurantJpaRepo.save(restaurant);
+        });
+    }
     public void deleteRestaurant(Long id){
         restaurantJpaRepo.deleteById(id);
     }

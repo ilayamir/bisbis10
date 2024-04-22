@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface DishJpaRepository extends JpaRepository<Dish, Integer> {
-    List<DishProjection> findByRestaurant(Restaurant restaurant);
+    List<Dish> findByRestaurant(Restaurant restaurant);
 }
 
