@@ -4,7 +4,6 @@ import com.att.tdp.bisbis10.jparepositories.DishJpaRepository;
 import com.att.tdp.bisbis10.jparepositories.RestaurantJpaRepository;
 import com.att.tdp.bisbis10.model.Dish;
 import com.att.tdp.bisbis10.model.Restaurant;
-import com.att.tdp.bisbis10.projections.DishProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

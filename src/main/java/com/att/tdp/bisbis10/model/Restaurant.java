@@ -3,6 +3,7 @@ package com.att.tdp.bisbis10.model;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -12,17 +13,22 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private double averageRating;
+    private Double averageRating;
     private boolean isKosher;
     @ElementCollection
     private List<String> cuisines;
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     private List<Dish> dishes;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
+    private List<Rating> ratings;
     public Restaurant() {
         super();
     }
-    public Restaurant(Long id, String name, double averageRating, Boolean isKosher, List<String> cuisines) {
+    public Restaurant(Long id, String name, Double averageRating, Boolean isKosher, List<String> cuisines) {
         super();
         this.id = id;
         this.name = name;
@@ -39,12 +45,12 @@ public class Restaurant {
 
     public void setName(String name) {this.name = name;}
 
-    public double getAverageRating(){
+    public Double getAverageRating(){
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.parseDouble(df.format(averageRating));
     }
 
-    public void setAverageRating(double averageRating){this.averageRating = averageRating;}
+    public void setAverageRating(Double averageRating){this.averageRating = averageRating;}
 
     public boolean getIsKosher(){return this.isKosher;}
 
