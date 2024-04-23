@@ -13,7 +13,7 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Double averageRating;
+    private double averageRating;
     private boolean isKosher;
     @ElementCollection
     private List<String> cuisines;
@@ -25,6 +25,11 @@ public class Restaurant {
     @JsonManagedReference
     @JsonIgnore
     private List<Rating> ratings;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonManagedReference
+    @JsonIgnore
+    private List<Orders> orders;
     public Restaurant() {
         super();
     }
@@ -46,8 +51,8 @@ public class Restaurant {
     public void setName(String name) {this.name = name;}
 
     public Double getAverageRating(){
-        DecimalFormat df = new DecimalFormat("#.##");
-        return Double.parseDouble(df.format(averageRating));
+            DecimalFormat df = new DecimalFormat("#.##");
+            return Double.parseDouble(df.format(averageRating));
     }
 
     public void setAverageRating(Double averageRating){this.averageRating = averageRating;}
