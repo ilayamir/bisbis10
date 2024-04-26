@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -54,7 +55,8 @@ public class OrdersController {
         if (order.getOrderItems() != null){
             for (OrderItem orderItem : order.getOrderItems()){
                 itemValidator.validate(orderItem, bindingResult);
-                if (dishJpaRepository.findById(orderItem.getDishId()).isEmpty()){
+                Optional<Dish> dish = dishJpaRepository.findById(orderItem.getDishId());
+                if (dish.isEmpty() || !restaurant.getDishes().contains(dish.get())){
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).
                             body(String.format("Dish: %d not in the menu", orderItem.getDishId()));
                 }
