@@ -1,5 +1,6 @@
 package com.att.tdp.bisbis10.controller;
 
+import com.att.tdp.bisbis10.jparepositories.DishJpaRepository;
 import com.att.tdp.bisbis10.model.Dish;
 import com.att.tdp.bisbis10.service.DishService;
 import com.att.tdp.bisbis10.service.RestaurantService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurants/{id}/dishes")
@@ -23,7 +25,8 @@ public class DishController {
     public DishController(DishService dishService) {
         this.dishService = dishService;
     }
-
+    @Autowired
+    private DishJpaRepository dishJpaRepository;
     @Autowired
     public RestaurantService restaurantService;
     @Autowired
@@ -48,12 +51,24 @@ public class DishController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation failed: " + bindingResult.getAllErrors());
         }
+        if (restaurantService.getRestaurantById(restaurantId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Restaurant not found");
+        }
+        if (dishJpaRepository.findById(dishId).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Dish not found");
+        }
         dishService.updateDish(dishId, dish);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{dishId}")
-    public ResponseEntity<Void> deleteDish(@PathVariable("id") Long restaurantId, @PathVariable int dishId) {
+    public ResponseEntity<String> deleteDish(@PathVariable("id") Long restaurantId, @PathVariable int dishId) {
+        if (restaurantService.getRestaurantById(restaurantId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Restaurant not found");
+        }
+        if (dishJpaRepository.findById(dishId).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Dish not found");
+        }
         dishService.deleteDish(restaurantId, dishId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
